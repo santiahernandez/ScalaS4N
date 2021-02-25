@@ -16,13 +16,11 @@ object List {
 
   def tail[A](lst:List[A]):List[A] = lst match {
     case Nil => Nil
-    case Const(h,Nil) => Nil
     case Const(h,t) => t
   }
 
   def head[A](lst:List[A]):A = lst match {
-    case Const(h,Nil) => h
-    case Const(h,t) => h
+    case Const(h,_) => h
   }
 
 
@@ -33,7 +31,6 @@ object List {
 
   @tailrec
   def and(lst:List[Boolean]):Boolean = lst match {
-    case Const(true,Nil) => true
     case Const(true,t) => and(t)
     case Const(false,_) => false
   }
