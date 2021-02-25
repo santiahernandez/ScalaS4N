@@ -1,8 +1,6 @@
 package week1
 package co.Inmutable
 
-import co.Inmutable
-
 sealed trait Nat
 case object Cero extends Nat
 case class Suc( n: Nat) extends Nat
