@@ -61,8 +61,8 @@ class ListTesting extends FunSuite {
   }
 
   test("funcion minMax"){
-    val lst = List(4D,5,1,8,3)
-    assert(List.minMax(lst) === (1,8))
+    val lst = List(4D,5,7,2,9,3)
+    assert(List.minMax(lst) === (2,9))
   }
 
 }

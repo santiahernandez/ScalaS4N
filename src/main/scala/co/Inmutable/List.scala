@@ -67,27 +67,25 @@ object List {
   }
 
   def minMax(lst:List[Double]):(Double,Double) = {
-    def maxDouble (ints:List[Double]):Double = {
-      def maximDouble (a:Double , b:Double):Double = {
-        if (a>=b) a
-        else b
-      }
-      ints match {
-        case Const(h,Nil) => h
-        case Const(h,t) => maximDouble(h,maxDouble(t))
-      }
+
+    def maximDouble (a:Double , b:Double):Double = {
+      if (a>=b) a
+      else b
     }
-    def minDouble (ints:List[Double]):Double = {
-      def minimDouble (a:Double , b:Double):Double = {
-        if (a>=b) b
-        else a
-      }
-      ints match {
-        case Const(h,Nil) => h
-        case Const(h,t) => minimDouble(h,minDouble(t))
-      }
+
+    def minimDouble (a:Double , b:Double):Double = {
+      if (a>=b) b
+      else a
     }
-    (minDouble(lst),maxDouble(lst))
+
+    @tailrec
+    def maxMintemp (doub:List[Double],minimo:Double,maximo:Double):(Double,Double)= doub match {
+      case Nil => (0,0)
+      case Const(h,Nil) => (minimDouble(maximo,h),maximDouble(minimo,h))
+      case Const(h,t) => maxMintemp(t,maximDouble(h,minimo),minimDouble(h,maximo))
+    }
+
+    maxMintemp(lst,Double.MinValue,Double.MaxValue)
   }
 
 
