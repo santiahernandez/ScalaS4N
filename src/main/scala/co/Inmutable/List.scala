@@ -31,6 +31,7 @@ object List {
 
   @tailrec
   def and(lst:List[Boolean]):Boolean = lst match {
+    case Nil => true
     case Const(true,t) => and(t)
     case Const(false,_) => false
   }
