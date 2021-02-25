@@ -44,7 +44,6 @@ object List {
     case Const(true, t) => true
   }
 
-
   def max (ints:List[Int]):Int = {
     def maxim (a:Int , b:Int):Int = {
       if (a>=b) a

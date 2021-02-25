@@ -5,7 +5,7 @@ import co.Inmutable
 
 sealed trait Nat
 case object Cero extends Nat
-case class Suc[+A]( n: Nat) extends Nat
+case class Suc( n: Nat) extends Nat
 
 object Nat {
 
@@ -19,9 +19,4 @@ object Nat {
     case h => Suc(fromIntToNat(h-1))
   }
 
-
-  def apply[A](as: A*) : Nat = {
-    if (as.isEmpty) Cero
-    else Suc(apply(as.tail:_*))
-  }
 }
