@@ -11,12 +11,12 @@ case class Const[+A](h: A, t: List[A]) extends List[A]
 object List {
   def lenght[A](lst:List[A]):Int =  lst match{
     case Nil => 0
-    case Const(h,t) => 1 + lenght(t)
+    case Const(_,t) => 1 + lenght(t)
   }
 
   def tail[A](lst:List[A]):List[A] = lst match {
     case Nil => Nil
-    case Const(h,t) => t
+    case Const(_,t) => t
   }
 
   def head[A](lst:List[A]):A = lst match {
@@ -41,7 +41,7 @@ object List {
     case Const(true,Nil) => true
     case Const(false,Nil) => false
     case Const(false,t) => or(t)
-    case Const(true, t) => true
+    case Const(true, _) => true
   }
 
   def max (ints:List[Int]):Int = {
@@ -105,19 +105,52 @@ object List {
   @tailrec
   def drop[A](n:Int, lst:List[A]): List[A] = (n, lst) match {
     case (0, lst) => lst
-    case (n, Nil) => Nil
-    case (n, Const(h, t)) => drop(n-1, t)
+    case (_, Nil) => Nil
+    case (n, Const(_, t)) => drop(n-1, t)
   }
 
   def split[A](n:Int, lst:List[A]) : (List[A], List[A]) = {
     @tailrec
     def splitintern(n:Int, lst:List[A] , lstaux:List[A]):(List[A], List[A]) = (n,lst) match {
     case  (0,lst) => (lstaux,lst)
-    case (n,Nil) => (Nil,Nil)
+    case (_,Nil) => (Nil,Nil)
     case (n,Const(h,t)) => splitintern(n-1,t,addEnd(lstaux,h))
     }
     splitintern(n,lst,Nil)
   }
+
+  def take[A](n:Int, lst:List[A]):List[A] ={
+    @tailrec
+    def takeinside(n:Int, lst:List[A] , lstaux:List[A]): List[A] = (n, lst) match {
+      case (0, lst) => lst
+      case (_, Nil) => lstaux
+      case (n, Const(h, t)) => takeinside(n-1, t,addEnd(lstaux,h))
+    }
+    takeinside(n,lst,Nil)
+  }
+
+  def init [A](lst:List[A]):List[A] ={
+    @tailrec
+    def initinside(lst:List[A] , lstaux:List[A]):List[A] = lst match {
+      case Nil => Nil
+      case Const(_,Nil) => lstaux
+      case Const(h,t) => initinside(t, addEnd(lstaux,h))
+    }
+    initinside(lst,Nil)
+  }
+
+  def zip[A,B](lst1:List[A],lst2:List[B]):List[(A,B)]= {
+    @tailrec
+    def zipin(lst1:List[A], lst2:List[B], lstaux:List[(A,B)]):List[(A,B)]=  (lst1,lst2) match {
+      case (Nil,_) => lstaux
+      case (_,Nil) => lstaux
+      case (Const(h1,t1) , Const(h2,t2)) => zipin(t1,t2,addEnd(lstaux,(h1,h2)))
+    }
+    zipin(lst1,lst2,Nil)
+  }
+
+
+
 
 
   def apply[A](as: A*) : List[A] = {
