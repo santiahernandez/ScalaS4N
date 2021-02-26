@@ -88,6 +88,37 @@ object List {
     maxMintemp(lst,Double.MinValue,Double.MaxValue)
   }
 
+  def const[A](h:A, t:List[A]):List[A] = Const(h, t)
+
+  def addEnd[A](lst:List[A], elem:A):List[A] = lst match{
+    case Nil          => Const(elem, Nil)
+    case Const(h, t)  => Const(h, addEnd(t, elem))
+  }
+
+  def append[A](lst1:List[A], lst2:List[A]):List[A] = (lst1, lst2) match{
+    case (Nil, Nil)   => Nil
+    case (lst1, Nil)  => lst1
+    case (Nil, lst2)  => lst2
+    case (Const(h, t), lst2) => Const(h, append(t, lst2))
+  }
+
+  @tailrec
+  def drop[A](n:Int, lst:List[A]): List[A] = (n, lst) match {
+    case (0, lst) => lst
+    case (n, Nil) => Nil
+    case (n, Const(h, t)) => drop(n-1, t)
+  }
+
+  def split[A](n:Int, lst:List[A]) : (List[A], List[A]) = {
+    @tailrec
+    def splitintern(n:Int, lst:List[A] , lstaux:List[A]):(List[A], List[A]) = (n,lst) match {
+    case  (0,lst) => (lstaux,lst)
+    case (n,Nil) => (Nil,Nil)
+    case (n,Const(h,t)) => splitintern(n-1,t,addEnd(lstaux,h))
+    }
+    splitintern(n,lst,Nil)
+  }
+
 
   def apply[A](as: A*) : List[A] = {
     if (as.isEmpty) Nil
