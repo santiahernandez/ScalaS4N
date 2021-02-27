@@ -1,6 +1,8 @@
 package week1
 package co.Inmutable
 
+import scala.annotation.tailrec
+
 sealed trait Nat
 case object Cero extends Nat
 case class Suc( n: Nat) extends Nat
@@ -17,4 +19,13 @@ object Nat {
     case h => Suc(fromIntToNat(h-1))
   }
 
+  def addNat(nat1:Nat, nat2: Nat):Nat ={
+    @tailrec
+    def addNatIntern(nat1:Nat,nat2:Nat,nataux:Nat):Nat=(nat1,nat2) match {
+      case (Cero,Cero) => nataux
+      case (Cero,_) => addNatIntern(nat2,Cero,nataux)
+      case (Suc(n1),_) => addNatIntern(n1,nat2, Suc(nataux))
+    }
+    addNatIntern(nat1,nat2,Cero)
+  }
 }

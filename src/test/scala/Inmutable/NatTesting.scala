@@ -19,4 +19,13 @@ class NatTesting extends FunSuite {
     val cuatro = Suc(Suc(Suc(Suc(Cero))))
     assert(Nat.fromIntToNat(4) === cuatro)
   }
+
+  test("Funcion addNat"){
+    val cuatro = Suc(Suc(Suc(Suc(Cero))))
+    val tres = Suc(Suc(Suc(Cero)))
+      val siete = Suc(Suc(Suc(Suc(Suc(Suc(Suc(Cero)))))))
+    assert(Nat.addNat(cuatro,tres) === siete)
+  }
+
+
 }
