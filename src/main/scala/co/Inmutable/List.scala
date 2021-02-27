@@ -149,6 +149,42 @@ object List {
     zipin(lst1,lst2,Nil)
   }
 
+  def unzip[A,B](lst:List[(A,B)]):(List[A] , List[B])= {
+    @tailrec
+    def unzipin(lst:List[(A,B)], lstaux1:List[A],lstaux2:List[B]):(List[A] , List[B])=  lst match {
+      case Nil => (lstaux1,lstaux2)
+      case Const((h1,h2),t) => unzipin(t,List.addEnd(lstaux1,h1),List.addEnd(lstaux2,h2))
+    }
+    unzipin(lst,Nil,Nil)
+  }
+
+  def reverse[A](lst:List[A]):List[A]={
+    @tailrec
+    def reverseintern(lst:List[A],lstaux:List[A]):List[A]=lst match {
+      case Nil => lstaux
+      case Const(h,t) => reverseintern(t,Const(h,lstaux))
+    }
+    reverseintern(lst,Nil)
+  }
+
+  def interprese[A](n:A, lst:List[A]):List[A]={
+    @tailrec
+    def interpreseIntern(dat:A,lst:List[A],lstaux:List[A]):List[A]= (dat,lst) match {
+      case (_,Nil) => lstaux
+      case (dat,Const(h,t)) => interpreseIntern(dat,t,List.addEnd(List.addEnd(lstaux,h),dat))
+    }
+    interpreseIntern(n,lst,Nil)
+  }
+
+  def concat[A](lst: List[List[A]]):List[A]={
+    @tailrec
+    def concatIntern(lst:List[List[A]],lstaux:List[A]):List[A]= lst match {
+      case Nil => lstaux
+      case Const(h,t) => concatIntern(t,List.append(lstaux,h))
+    }
+    concatIntern(lst,Nil)
+  }
+
 
 
 

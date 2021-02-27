@@ -44,4 +44,29 @@ class ListConstTesting extends FunSuite {
     assert(List.zip(lst1,lst2)===esp)
   }
 
+  test("Funcion unzip"){
+    val lst3 = List(1, 2, 3)
+    val lst2 = List(true,false,true)
+    val lst1 = List((1,true),(2,false),(3,true))
+    assert(List.unzip(lst1)===(lst3,lst2))
+  }
+
+  test("Funcion reverse"){
+    val lst1 = List(1, 2, 3)
+    val lst2 = List(3,2,1)
+    assert(List.reverse(lst1)===lst2)
+  }
+
+  test("Funcion interprese"){
+    val lst1 = List(1, 2, 3)
+    val lst2 = List(1,0,2,0,3,0)
+    assert(List.interprese(0,lst1)===lst2)
+  }
+
+  test ("Funcion concat"){
+    val lst1 = List(List(1,2,3),List(4,5,6),List(7,8,9))
+    val lst2 = List(1,2,3,4,5,6,7,8,9)
+    assert(List.concat(lst1)===lst2)
+  }
+
 }
