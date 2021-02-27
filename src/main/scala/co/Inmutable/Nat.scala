@@ -28,4 +28,16 @@ object Nat {
     }
     addNatIntern(nat1,nat2,Cero)
   }
+
+  def prodNat(nat1:Nat, nat2: Nat):Nat ={
+    @tailrec
+    def prodNatIntern(nat1:Nat,nat2:Nat,nataux:Nat):Nat=(nat1,nat2) match {
+      case (Cero,_) => Cero
+      case (_,Cero) => Cero
+      case (Suc(Cero),n) => addNat(n,nataux)
+      case (Suc(n1),_) => prodNatIntern(n1,nat2,addNat(nataux,nat2))
+
+    }
+    prodNatIntern(nat1,nat2,Cero)
+  }
 }

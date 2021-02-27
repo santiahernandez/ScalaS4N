@@ -27,5 +27,12 @@ class NatTesting extends FunSuite {
     assert(Nat.addNat(cuatro,tres) === siete)
   }
 
+  test("Funcion prodNat"){
+    val dos = Suc(Suc(Cero))
+    val tres = Suc(Suc(Suc(Cero)))
+    val seis = Suc(Suc(Suc(Suc(Suc(Suc(Cero))))))
+    assert(Nat.prodNat(dos,tres) === seis)
+  }
+
 
 }
