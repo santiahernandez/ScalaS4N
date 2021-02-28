@@ -1,4 +1,3 @@
-package week1
 package co.Inmutable
 
 import scala.annotation.tailrec

@@ -1,4 +1,3 @@
-package week1
 package Funciones
 
 import org.scalatest.FunSuite

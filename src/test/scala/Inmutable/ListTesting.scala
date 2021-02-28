@@ -1,4 +1,3 @@
-package week1
 package Inmutable
 
 import org.scalatest.FunSuite

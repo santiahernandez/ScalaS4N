@@ -1,5 +1,5 @@
-package week1
 package Inmutable
+
 import org.scalatest.FunSuite
 import co.Inmutable.{Cero, Nat, Suc}
 
