@@ -44,46 +44,26 @@ object List {
   }
 
   def max (ints:List[Int]):Int = {
-    def maxim (a:Int , b:Int):Int = {
-      if (a>=b) a
-      else b
-    }
     ints match {
       case Const(h,Nil) => h
-      case Const(h,t) => maxim(h,max(t))
+      case Const(h,t) => math.max(h,max(t))
     }
   }
 
   def min (ints:List[Long]):Long = {
-    def minim (a:Long , b:Long):Long = {
-      if (a>=b) b
-      else a
-    }
     ints match {
     case Const(h,Nil) => h
-    case Const(h,t) => minim(h,min(t))
+    case Const(h,t) => math.min(h,min(t))
     }
   }
 
   def minMax(lst:List[Double]):(Double,Double) = {
-
-    def maximDouble (a:Double , b:Double):Double = {
-      if (a>=b) a
-      else b
-    }
-
-    def minimDouble (a:Double , b:Double):Double = {
-      if (a>=b) b
-      else a
-    }
-
     @tailrec
     def maxMintemp (doub:List[Double],minimo:Double,maximo:Double):(Double,Double)= doub match {
       case Nil => (0,0)
-      case Const(h,Nil) => (minimDouble(maximo,h),maximDouble(minimo,h))
-      case Const(h,t) => maxMintemp(t,maximDouble(h,minimo),minimDouble(h,maximo))
+      case Const(h,Nil) => (math.min(maximo,h),math.max(minimo,h))
+      case Const(h,t) => maxMintemp(t,math.max(h,minimo),math.min(h,maximo))
     }
-
     maxMintemp(lst,Double.MinValue,Double.MaxValue)
   }
 
@@ -209,7 +189,7 @@ object List {
 
   def mulFL(lst:List[Int]): Int = foldLeft(lst,1)(_*_)
 
-  def sumarUnoFL(lst:List[Int]): List[Int] = foldRight(lst,Nil:List[Int])((h,t)=>Const(h+1,t))
+  def sumarUnoFR(lst:List[Int]): List[Int] = foldRight(lst,Nil:List[Int])((h,t)=>Const(h+1,t))
 
   def map[A,B](lst:List[A])(f:A=>B):List[B] = foldRight(lst,Nil:List[B])((x,y) => Const(f(x),y))
 

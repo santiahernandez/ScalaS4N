@@ -6,7 +6,7 @@ import co.Inmutable.{Const, List, Nil}
 class ListHighOrderFunctionTesting extends FunSuite{
   test("funcion sumarUno") {
     val lst = List(1, 2, 3)
-    assert(List.sumarUnoFL(lst) === List(2, 3, 4))
+    assert(List.sumarUnoFR(lst) === List(2, 3, 4))
   }
 
   /*
