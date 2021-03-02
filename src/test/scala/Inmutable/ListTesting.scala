@@ -64,4 +64,8 @@ class ListTesting extends FunSuite {
     assert(List.minMax(lst) === (2,9))
   }
 
+  test("funcion sumarUno"){
+    val lst = List(1,2,3)
+    assert(List.sumarUnoFL(lst) === List(2,3,4))
+  }
 }

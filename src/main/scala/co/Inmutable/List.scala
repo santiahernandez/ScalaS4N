@@ -184,12 +184,59 @@ object List {
     concatIntern(lst,Nil)
   }
 
+  /*
+  Funciones de orden superior
+  * */
 
+  def foldRight[A,B](as:List[A],z:B)(f:(A,B)=>B):B = as match {
+    case Nil => z
+    case Const(h,t) => f(h,foldRight(t,z)(f))
+  }
 
+  def sumFR(lst:List[Int]):Int = foldRight(lst,0)(_+_)
 
+  def mulFR(lst:List[Int]): Int = foldRight(lst,1)(_*_)
+
+  def lenghtFR[A](lst:List[A]):Int = foldRight(lst,0)((_,y)=>y+1)
+
+  @tailrec
+  def foldLeft[A,B](lst:List[A], z:B)(f:(B,A)=>B):B = lst match {
+    case Const(h, t) => foldLeft(t,f(z,h))(f)
+    case Nil => z
+  }
+
+  def sumFL(lst:List[Int]):Int = foldLeft(lst,0)(_+_)
+
+  def mulFL(lst:List[Int]): Int = foldLeft(lst,1)(_*_)
+
+  def sumarUnoFL(lst:List[Int]): List[Int] = foldRight(lst,Nil:List[Int])((h,t)=>Const(h+1,t))
+
+  def map[A,B](lst:List[A])(f:A=>B):List[B] = foldRight(lst,Nil:List[B])((x,y) => Const(f(x),y))
+
+  def andFR(lst:List[Boolean]):Boolean = foldRight(lst,true)(_&&_)
+
+  def takewhile[A](lst:List[A])(p:A=>Boolean):List[A] = foldRight(lst,Nil:List[A])((h,t) => if (p(h)) Const(h,t) else Nil)
+
+  def filter[A](lst:List[A])(p:A=>Boolean):List[A] = foldRight(lst,Nil:List[A])((h,t) => if (p(h)) Const(h,t) else t)
+
+  //TODO
+  //def unzipFR[A,B](lst:List[A]):(List[A],List[B]) = foldRight(lst,(Nil,Nil):(List[A],List[B]))((h,t)=> (Const(h._1,t._1),Const(h._2,t._2)))
+
+  def lengthFL[A](lst:List[A]):Int = foldLeft(lst,0)((h,_)=>h+1)
+
+  def andFL(lst:List[Boolean]):Boolean = foldLeft(lst,true)(_&&_)
+
+  //TODO
+  //def takewhileFL[A](lst:List[A])(p:A=>Boolean):List[A] = foldLeft(lst,Nil:List[A])((h,t) => if (p(t)) addEnd(h,t) else reverse(drop(1,h))  )
+
+  def filterFL[A](lst:List[A])(p:A=>Boolean):List[A] = foldLeft(lst,Nil:List[A])((h,t) => if (p(t)) addEnd(h,t) else h)
+
+  //TODO
+  //def unzipFL[A,B](lst:List[A]):(List[A],List[B]) = foldLeft(lst,(Nil,Nil):(List[A],List[B]))((h,t)=> (addEnd(h._1,t._1),addEnd(h._2,t._2)))
 
   def apply[A](as: A*) : List[A] = {
     if (as.isEmpty) Nil
     else Const(as.head, apply(as.tail:_*))
   }
+
 }
