@@ -64,6 +64,19 @@ class ListHighOrderFunctionTesting extends FunSuite{
     assert(List.and(lst) === List.andFL(lst))
   }
 
+  test("funcion flip"){
+    val lst = List(true,true,false)
+    assert(List.flip(lst) === List(false,true,true))
+  }
+
+
+  test("funcion takewhile utilizando foldLeft"){
+    val lst = List(1,2,3,4,5,6,7,8)
+    val p = (x:Int)=>{
+      x<5 || x>7
+    }
+    assert(List.takewhile(lst)(p)===List.takewhileFL(lst)(p))
+  }
 
   test("funcion filter usando folLeft"){
     val lst = List(1,2,3,4,5,6,7,8)
