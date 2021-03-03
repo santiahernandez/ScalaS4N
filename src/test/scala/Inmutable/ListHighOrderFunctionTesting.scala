@@ -69,6 +69,15 @@ class ListHighOrderFunctionTesting extends FunSuite{
     assert(List.flip(lst) === List(false,true,true))
   }
 
+  test("funcion unzip FR"){
+    val lst = List((true,1),(true,2),(false,3))
+    assert(List.unzipFR(lst) === (List(true,true,false),List(1,2,3)))
+  }
+
+  test("funcion unzip Fl"){
+    val lst = List((true,1),(true,2),(false,3))
+    assert(List.unzipFL(lst) === (List(true,true,false),List(1,2,3)))
+  }
 
   test("funcion takewhile utilizando foldLeft"){
     val lst = List(1,2,3,4,5,6,7,8)

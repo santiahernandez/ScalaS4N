@@ -198,8 +198,8 @@ object List {
   def takewhile[A](lst:List[A])(p:A=>Boolean):List[A] = foldRight(lst,Nil:List[A])((h,t) => if (p(h)) Const(h,t) else Nil)
 
   def filter[A](lst:List[A])(p:A=>Boolean):List[A] = foldRight(lst,Nil:List[A])((h,t) => if (p(h)) Const(h,t) else t)
-  //TODO
-//  def unzipFR[A,B](lst:List[A]):(List[A],List[B]) = foldRight(lst,(Nil,Nil):(List[A],List[B]))((h,t)=> (Const(h,t._1),Const(h,t._2)))
+
+  def unzipFR[A,B](lst:List[(A,B)]):(List[A],List[B]) = foldRight(lst,(Nil,Nil):(List[A],List[B]))((h,t)=> (Const(h._1,t._1),Const(h._2,t._2)))
 
   def lengthFL[A](lst:List[A]):Int = foldLeft(lst,0)((h,_)=>h+1)
 
@@ -207,12 +207,11 @@ object List {
 
   def flip[A](lst:List[A]):List[A]=foldLeft(lst,Nil:List[A])((h,t)=>Const(t,h))
 
-  def takewhileFL[A](lst:List[A])(p:A=>Boolean):List[A] = flip(foldLeft(flip(lst),Nil:List[A])((h,t) => if (p(t)) addEnd(h,t) else flip(drop(1,h))))
+  def takewhileFL[A](lst:List[A])(p:A=>Boolean):List[A] = flip(foldLeft(flip(lst),Nil:List[A])((h,t) => if (p(t)) addEnd(h,t) else drop(1,h)))
 
   def filterFL[A](lst:List[A])(p:A=>Boolean):List[A] = foldLeft(lst,Nil:List[A])((h,t) => if (p(t)) addEnd(h,t) else h)
 
-  //TODO
-  //def unzipFL[A,B](lst:List[A]):(List[A],List[B]) = foldLeft(lst,(Nil,Nil):(List[A],List[B]))((h,t)=> (addEnd(h._1,t._1),addEnd(h._2,t._2)))
+  def unzipFL[A,B](lst:List[(A,B)]):(List[A],List[B]) = foldLeft(lst,(Nil,Nil):(List[A],List[B]))((h,t)=> (addEnd(h._1,t._1),addEnd(h._2,t._2)))
 
   def apply[A](as: A*) : List[A] = {
     if (as.isEmpty) Nil
